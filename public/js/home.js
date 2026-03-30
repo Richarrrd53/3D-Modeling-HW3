@@ -186,9 +186,11 @@ moonLoader.load('../img/moon_texture.jpg', (texture) => {
 
 const stageLoader = new GLTFLoader(manager);
 stageLoader.setCrossOrigin('anonymous');
-const stageURL = "https://docs.google.com/uc?export=download&id=10_zMVHG-amBj0MumDeb1cbPaqrVLwrxX";
+const stageURL = "https://github.com/Richarrrd53/3D-Modeling-HW3/releases/download/v1/stage.glb";
 stageLoader.load(stageURL, (gltf) => {
-    stage = gltf.scene;
+    const stage = gltf.scene;
+    scene.add(stage);
+    console.log("舞台載入成功！");
     const stageColors = new Uint8Array([0, 150, 255]);
     const stageGradient = new THREE.DataTexture(stageColors, stageColors.length, 1, THREE.LuminanceFormat);
     stageGradient.minFilter = stageGradient.magFilter = THREE.NearestFilter;
@@ -222,7 +224,7 @@ stageLoader.load(stageURL, (gltf) => {
     }, (xhr) => {
         console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
     }, (error) => {
-        console.error('載入失敗，可能是被 Google 擋掉了:', error);
+        console.error('載入失敗', error);
 });
 gridHelper = new THREE.GridHelper(20, 20, 0x414141, 0x313131);
 scene.add(gridHelper);
