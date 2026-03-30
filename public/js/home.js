@@ -599,7 +599,6 @@ document.addEventListener('keydown', (event) => {
 document.addEventListener("DOMContentLoaded", () => {
     
     const beginBG = document.getElementById('beginBG');
-    initThreeJS();
     initStageLoading();
 
     const loaderWrapper = document.getElementById('loaderWrapper');
