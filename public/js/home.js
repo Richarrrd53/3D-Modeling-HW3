@@ -28,8 +28,6 @@ controls.enableDamping = true;
 
 const my_model = '../3dmodel/merged-model.glb';
 const manager = new THREE.LoadingManager();
-let isModelLoaded = false;
-let isStageCompletelyLoaded = false;
 
 
 const format = ( renderer.capabilities.isWebGL2 ) ? THREE.RedFormat : THREE.LuminanceFormat;
@@ -186,128 +184,48 @@ moonLoader.load('../img/moon_texture.jpg', (texture) => {
     updateSun(10);
 });
 
+const stageLoader = new GLTFLoader(manager);
+stageLoader.setCrossOrigin('anonymous');
+const stageURL = "https://yu6dbewhhcd3e9da.public.blob.vercel-storage.com/stage.glb";
+stageLoader.load(stageURL, (gltf) => {
+    const stage = gltf.scene;
+    scene.add(stage);
+    console.log("舞台載入成功！");
+    const stageColors = new Uint8Array([0, 150, 255]);
+    const stageGradient = new THREE.DataTexture(stageColors, stageColors.length, 1, THREE.LuminanceFormat);
+    stageGradient.minFilter = stageGradient.magFilter = THREE.NearestFilter;
+    stageGradient.needsUpdate = true;
 
-const DB_NAME = 'NCNU_IM_Cache';
-const STORE_NAME = 'Models';
-const STAGE_KEY = 'stage_model_v1';
-const STAGE_URL = "https://yu6dbewhhcd3e9da.public.blob.vercel-storage.com/stage.glb";
-const EXPECTED_SIZE = 120 * 1024 * 1024; // 120MB
+    stage.traverse((child) => {
+        if (child.isMesh) {
+            child.castShadow = true;
+            child.receiveShadow = true;
 
-async function initStageLoading() {
-    const db = await openDatabase();
-    const cachedBlob = await getCachedModel(db, STAGE_KEY);
-
-    if (cachedBlob) {
-        console.log("偵測到快取，加速載入中...");
-        updateLoadingUI(100, "從本地快取讀取中...");
-        loadModelIntoScene(URL.createObjectURL(cachedBlob));
-    } else {
-        console.log("無快取，開始下載資源...");
-        downloadAndCacheModel(db);
-    }
-
-}
-
-function openDatabase() {
-    return new Promise((resolve) => {
-        const request = indexedDB.open(DB_NAME, 1);
-        request.onupgradeneeded = (e) => e.target.result.createObjectStore(STORE_NAME);
-        request.onsuccess = (e) => resolve(e.target.result);
-    });
-}
-
-function getCachedModel(db, key) {
-    return new Promise((resolve) => {
-        const transaction = db.transaction(STORE_NAME, 'readonly');
-        const request = transaction.objectStore(STORE_NAME).get(key);
-        request.onsuccess = () => resolve(request.result);
-    });
-}
-
-function downloadAndCacheModel(db) {
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', STAGE_URL, true);
-    xhr.responseType = 'blob';
-
-    xhr.onprogress = (event) => {
-        let loaded = event.loaded;
-        let total = event.lengthComputable ? event.total : EXPECTED_SIZE;
-        let progress = Math.round((loaded / total) * 100);
-        
-        if (progress > 99) progress = 99; 
-        updateLoadingUI(progress, `下載中: ${(loaded / 1024 / 1024).toFixed(1)}MB / 120MB`);
-    };
-
-    xhr.onload = () => {
-        if (xhr.status === 200) {
-            const blob = xhr.response;
-            const transaction = db.transaction(STORE_NAME, 'readwrite');
-            transaction.objectStore(STORE_NAME).put(blob, STAGE_KEY);
-            
-            updateLoadingUI(100, "下載完成，正在渲染舞台...");
-            loadModelIntoScene(URL.createObjectURL(blob));
-        }
-    };
-    xhr.send();
-}
-
-function updateLoadingUI(percent, text) {
-    document.getElementById('progress-fill').style.width = percent + '%';
-    document.getElementById('progress-percent').innerText = percent + '%';
-    document.getElementById('progress-info').innerText = text;
-}
-
-function checkAllLoaded() {
-    
-    if (isModelLoaded && isStageCompletelyLoaded) {
-        
-        setTimeout(() => {
-            const loaderWrapper = document.getElementById('loaderWrapper');
-            const beginGuide = document.getElementById('beginGuide');
-            
-            if (loaderWrapper && beginGuide) {
-                loaderWrapper.style.opacity = '0';
-                loaderWrapper.style.filter = 'blur(100px)';
-                loaderWrapper.style.pointerEvents = 'none';
-                setTimeout(() => {
-                    beginGuide.style.opacity = '1';
-                    beginGuide.style.filter = 'blur(0px)';
-                    beginGuide.style.pointerEvents = 'auto';
-                }, 1000);
-            }
-        }, 5000);
-    }
-}
-
-function loadModelIntoScene(url) {
-    const stageLoader = new GLTFLoader(manager);
-    stageLoader.load(url, (gltf) => {
-        const stage = gltf.scene;
-        
-        const stageColors = new Uint8Array([0, 150, 255]);
-        const stageGradient = new THREE.DataTexture(stageColors, stageColors.length, 1, THREE.LuminanceFormat);
-        stageGradient.needsUpdate = true;
-
-        stage.traverse((child) => {
-            if (child.isMesh) {
-                child.castShadow = true;
-                child.receiveShadow = true;
-                const oldMat = child.material;
+            const oldMat = child.material;
+            if (oldMat) {
                 child.material = new THREE.MeshToonMaterial({
                     map: oldMat.map,
+                    color: new THREE.Color(0xffffff),
                     gradientMap: stageGradient,
+                    transparent: oldMat.transparent,
+                    opacity: oldMat.opacity,
+                    alphaTest: oldMat.alphaTest > 0 ? oldMat.alphaTest : (oldMat.transparent ? 0.5 : 0),
+                    depthWrite: true, 
                     side: THREE.DoubleSide
                 });
             }
-        });
-
-        stage.position.set(6, -1.15, 10);
-        stage.rotation.y = Math.PI;
-        scene.add(stage);
-        isStageCompletelyLoaded = true;
-        checkAllLoaded();
+        }
     });
-}
+    stage.position.x = 6;
+    stage.position.z = 10;
+    stage.position.y = -1.15;
+    stage.rotation.y = Math.PI / 1;
+    scene.add(stage);
+    }, (xhr) => {
+        console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+    }, (error) => {
+        console.error('載入失敗', error);
+});
 gridHelper = new THREE.GridHelper(20, 20, 0x414141, 0x313131);
 scene.add(gridHelper);
 gridHelper.visible = false;
@@ -599,7 +517,6 @@ document.addEventListener('keydown', (event) => {
 document.addEventListener("DOMContentLoaded", () => {
     
     const beginBG = document.getElementById('beginBG');
-    initStageLoading();
 
     const loaderWrapper = document.getElementById('loaderWrapper');
     setTimeout(() => {
@@ -608,13 +525,23 @@ document.addEventListener("DOMContentLoaded", () => {
         loaderWrapper.style.opacity = '1';
         loaderWrapper.style.filter = 'blur(0px)';
     }, 100);
-    document.getElementById('side-pri-btn').style.transform = 'translate(40px, 240px) scale(0)';
 
     manager.onLoad = () => {
-        console.log('所有資源載入完成！');
-        isModelLoaded = true;
-        checkAllLoaded();
+    console.log('所有資源載入完成！');
+
+    setTimeout(() => {
+            const loaderWrapper = document.getElementById('loaderWrapper');
+            const beginGuide = document.getElementById('beginGuide');
+            
+            if (loaderWrapper && beginGuide) {
+                loaderWrapper.style.opacity = '0';
+                loaderWrapper.style.filter = 'blur(100px)';
+                beginGuide.style.opacity = '1';
+                beginGuide.style.filter = 'blur(0px)';
+            }
+        }, 5000);
     };
+    document.getElementById('side-pri-btn').style.transform = 'translate(40px, 240px) scale(0)';
 
     updateUI();
     updateSun(10);
