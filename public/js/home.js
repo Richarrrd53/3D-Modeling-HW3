@@ -188,7 +188,7 @@ const stageLoader = new GLTFLoader(manager);
 stageLoader.setCrossOrigin('anonymous');
 const stageURL = "https://yu6dbewhhcd3e9da.public.blob.vercel-storage.com/stage.glb";
 stageLoader.load(stageURL, (gltf) => {
-    const stage = gltf.scene;
+    stage = gltf.scene;
     scene.add(stage);
     console.log("舞台載入成功！");
     const stageColors = new Uint8Array([0, 150, 255]);
@@ -717,11 +717,11 @@ sideNxtBtn.onclick = () => {
         sidePriBtn.style.transform = 'translate(40px, 240px) scale(1)';
         sidePriBtn.style.opacity = '1';
         sidePriBtn.style.filter = 'blur(0px)';
-    }, 210);
+    }, 20);
 
     setTimeout(() => {
         sidePriBtn.style.transform = '';
-    }, 610);
+    }, 410);
 }
 
 sidePriBtn.onclick = () => {
@@ -743,10 +743,10 @@ sidePriBtn.onclick = () => {
         sideNxtBtn.style.transform = 'translate(40px, 240px) scale(1)';
         sideNxtBtn.style.opacity = '1';
         sideNxtBtn.style.filter = 'blur(0px)';
-    }, 210);
+    }, 20);
     setTimeout(() => {
         sideNxtBtn.style.transform = '';
-    }, 610);
+    }, 410);
 }
 
 
