@@ -1,0 +1,36 @@
+{
+  "name": "storyboard-ai-github-io",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Richarrrd53/storyboard.ai.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Richarrrd53/storyboard.ai.github.io/issues"
+  },
+  "homepage": "https://github.com/Richarrrd53/storyboard.ai.github.io#readme",
+  "description": "",
+  "devDependencies": {
+    "@babel/core": "^7.28.4",
+    "babel-loader": "^10.0.0",
+    "webpack": "^5.102.1",
+    "webpack-cli": "^6.0.1"
+  },
+  "dependencies": {
+    "@google/genai": "^1.22.0",
+    "body-parser": "^2.2.0",
+    "express": "^5.1.0",
+    "fs": "^0.0.1-security",
+    "marked": "^16.4.0",
+    "path": "^0.12.7"
+  }
+}

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Model Showcase</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+    <link rel="stylesheet" href="../css/home.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="ui-container">
+        <div id="ui-glow"></div>
+        <select id="anim-select">
+            <option value="Idle" disabled>Select an animation...</option>
+        </select>
+        <div class="glass-radio-group" id="animationRadio">
+            <input type="radio" name="plan" id="glass-idle" checked value="7" />
+            <label for="glass-idle">待機</label>
+
+            <input type="radio" name="plan" id="glass-walk" value="6" />
+            <label for="glass-walk">走動</label>
+
+            <input type="radio" name="plan" id="glass-run" value="3" />
+            <label for="glass-run">跑步</label>
+
+            <input type="radio" name="plan" id="glass-salute" value="2" />
+            <label for="glass-salute">敬禮</label>
+            
+            <input type="radio" name="plan" id="glass-flipKick" value="0" />
+            <label for="glass-flipKick">翻滾踢</label>
+
+            <input type="radio" name="plan" id="glass-jump" value="1" />
+            <label for="glass-jump">翻滾跳</label>
+
+            <input type="radio" name="plan" id="glass-fight" value="4" />
+            <label for="glass-fight">戰鬥(拳)</label>
+
+
+            <input type="radio" name="plan" id="glass-flair" value="5" />
+            <label for="glass-flair">跳舞</label>
+
+            <div class="glass-glider"></div>
+        </div>
+        <div class="flex-row">
+            <label class="play-container">
+                <input checked="checked" type="checkbox" id="play-pause-btn">
+                <svg viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="play"><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"></path></svg>
+                <svg viewBox="0 0 320 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="pause"><path d="M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z"></path></svg>
+            </label>
+            <input type="range" id="timeline" min="0" max="100" value="0">
+        </div>
+    </div>
+
+    <div id="full-screen-toggle">
+        <label class="full-screen-container">
+            <input id="full-screen-check" type="checkbox">
+                <svg viewBox="0 0 448 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="expand"><path d="M32 32C14.3 32 0 46.3 0 64v96c0 17.7 14.3 32 32 32s32-14.3 32-32V96h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H32zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7 14.3 32 32 32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H64V352zM320 32c-17.7 0-32 14.3-32 32s14.3 32 32 32h64v64c0 17.7 14.3 32 32 32s32-14.3 32-32V64c0-17.7-14.3-32-32-32H320zM448 352c0-17.7-14.3-32-32-32s-32 14.3-32 32v64H320c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c17.7 0 32-14.3 32-32V352z"></path></svg>
+                <svg viewBox="0 0 448 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="compress"><path d="M160 64c0-17.7-14.3-32-32-32s-32 14.3-32 32v64H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c17.7 0 32-14.3 32-32V64zM32 320c-17.7 0-32 14.3-32 32s14.3 32 32 32H96v64c0 17.7 14.3 32 32 32s32-14.3 32-32V352c0-17.7-14.3-32-32-32H32zM352 64c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7 14.3 32 32 32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H352V64zM320 320c-17.7 0-32 14.3-32 32v96c0 17.7 14.3 32 32 32s32-14.3 32-32V384h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H320z"></path></svg>
+        </label>
+    </div>
+    <div id="beginBG">
+        <div id="beginLoading">
+            <div class="loader-wrapper" id="loaderWrapper">
+                <span class="loader-letter">L</span>
+                <span class="loader-letter">o</span>
+                <span class="loader-letter">a</span>
+                <span class="loader-letter">d</span>
+                <span class="loader-letter">i</span>
+                <span class="loader-letter">n</span>
+                <span class="loader-letter">g</span>
+                <span class="loader-letter"> </span>
+                <span class="loader-letter">3</span>
+                <span class="loader-letter">D</span>
+                <span class="loader-letter"> </span>
+                <span class="loader-letter">M</span>
+                <span class="loader-letter">o</span>
+                <span class="loader-letter">d</span>
+                <span class="loader-letter">e</span>
+                <span class="loader-letter">l</span>
+                <span class="loader-letter">s</span>
+
+                <div class="loader"></div>
+            </div>
+        </div>
+        <div id="beginGuide">
+            <h1>操作提示</h1>
+            <div id="guideContainer">
+                <div class="guidelines">
+                    <img src="../img/icon/mouse_left.svg" alt="按住滑鼠左鍵">
+                    <span>按住滑鼠左鍵以<span class="highlight">旋轉</span>模型</span>
+                </div>
+                <div class="guidelines">
+                    <img src="../img/icon/mouse_right.svg" alt="按住滑鼠右鍵">
+                    <span>按住滑鼠右鍵以<span class="highlight">平移</span>模型</span>
+                </div>
+                <div class="guidelines">
+                    <img src="../img/icon/mouse_scroll.svg" alt="滾動滑鼠滾輪">
+                    <span>滾動滑鼠滾輪以<span class="highlight">縮放</span>模型</span>
+                </div>
+            </div>
+
+            <button id="start-btn">I Got It!</button>
+        </div>
+        
+    </div>
+    
+
+    <div id="side-panel" class="panel-closed">
+        <button id="panel-toggle"><svg viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg" class="play"><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"></path></svg></button>
+        <div id="side-panel-bg">
+            <div id="side-glow"></div>
+            <div class="panel-content">
+                <h3>控制面板</h3>
+    
+                <div class="control-group">
+                    <label>顯示陰影</label>
+                    <label class="switch">
+                        <input type="checkbox" class="checkbox" id="shadow-toggle" checked>
+                        <div class="slider"></div>
+                    </label>
+                </div>
+    
+                <div class="control-group">
+                    <label>顯示建築</label>
+                    <label class="switch">
+                        <input type="checkbox" class="checkbox" id="stage-toggle" checked>
+                        <div class="slider"></div>
+                    </label>
+                </div>
+
+                <div class="control-group">
+                    <label>顯示Skybox</label>
+                    <label class="switch">
+                        <input type="checkbox" class="checkbox" id="skybox-toggle" checked>
+                        <div class="slider"></div>
+                    </label>
+                </div>
+
+                <div class="control-group">
+                    <label>顯示格線平台</label>
+                    <label class="switch">
+                        <input type="checkbox" class="checkbox" id="grid-toggle">
+                        <div class="slider"></div>
+                    </label>
+                </div>
+                
+                <div class="control-group">
+                    <label>環境亮度</label>
+                    <input type="range" id="exposure-slider" min="0" max="2" step="0.1" value="1.3">
+                    <span id="exposure-value">1.3</span>
+                </div>
+
+                <div class="control-group">
+                    <label>模擬時間</label>
+                    <input type="range" id="time-slider" min="0" max="24" step="0.1" value="10">
+                    <span id="time-display">10：00</span>
+                </div>
+            </div>
+        </div>
+        <button id="side-nxt-btn">關於此專案</button>
+        <div id="side-panel-bg2">
+            <div id="side-glow2"></div>
+            <div class="panel-content">
+                <h3>關於</h3>
+                <p>© 2026 黃晟銘 - 3D Modeling Homework3</p>
+                <p>Built with Three.js v129</p>
+                <p>角色模型出處：原神官方bilibili 創作者激勵計畫</p>
+                <p>月亮材質出處：<a href="https://svs.gsfc.nasa.gov/gallery/renderman-challenge/" target="_blank">https://svs.gsfc.nasa.gov/gallery/renderman-challenge/</a></p>
+            </div>
+        </div>
+        <button id="side-pri-btn">控制面板</button>
+    </div>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://esm.sh/three@0.129.0",
+                "three/addons/": "https://esm.sh/three@0.129.0/examples/jsm/"
+            }
+        }
+    </script>
+    <script type="module" src="../js/home.js"></script>
+</body>
+</html>

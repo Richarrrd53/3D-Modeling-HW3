@@ -1,0 +1,50 @@
+body{
+    width: 1920px;
+    height: 1080px;
+    background-color: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0;
+    scrollbar-width: none;
+    user-select: none;
+    overflow: hidden;
+}
+
+.texts{
+    font-size: 110px;
+    font-weight: bold;
+    text-align: center;
+    justify-self: center;
+    color: #2e2e2e;
+    opacity: 0;
+    transform: rotate(0deg) scale(0);
+    margin-left: 0;
+    filter: blur(30px);
+    transition: all 1s cubic-bezier(.33,1.53,.69,.99);
+}
+
+#text1{
+    color: #1a73e8;
+    position: absolute;
+}
+
+#text2{
+    color: #1a73e8;
+    transform: rotate(-90deg) scale(1);
+    margin-right: 800px;
+}
+
+#text3{
+    transform: rotate(-90deg) scale(1);
+    margin-right: 800px;
+}
+
+
+.noto-sans-tc {
+  font-family: "Noto Sans TC", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  font-style: normal;
+}

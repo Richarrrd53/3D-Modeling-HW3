@@ -1,0 +1,277 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#fullScreenBtn{
+    position: absolute;
+    left: 0;
+    top: 0;
+    border: 0;
+    background-color: transparent;
+}
+
+#ifm{
+    margin: 0;
+    overflow: hidden;
+    scale: 1;
+    transform-origin: top left;
+    border: 0;
+    outline: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: all 0.5s cubic-bezier(.4,0,.2,1);
+    overflow: hidden;
+    scrollbar-width: none;
+}
+
+.stinger{
+    width: 1920px;
+    height: 1080px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 999;
+    animation: stinger 3s cubic-bezier(.4, 0, .2, 1);
+}
+
+.wave1{
+    width: 1920px;
+    height: auto;
+}
+
+.wave2{
+    width: 1920px;
+    height: auto;
+    rotate: 180deg;
+}
+
+.stinger-dot{
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+}
+
+.stinger-line{
+    width: 50px;
+    height: 250px;
+    border-radius: 25px;
+}
+
+#wave2-1{
+    position: absolute;
+    left: 0;
+    top: 65%;
+}
+
+#wave2-2{
+    position: absolute;
+    left: 0;
+    top: 103%;
+}
+
+#wave1-1{
+    position: absolute;
+    left: 0;
+    top: 30%;
+}
+
+#wave1-2{
+    position: absolute;
+    left: 0;
+    top: 78%;
+}
+
+#stingerDot1{
+    position: absolute;
+    left: 25%;
+    top: 15%;
+    background-color: #5e95dd;
+    scale: 0.6;
+}
+
+#stingerDot2{
+    position: absolute;
+    left: 65%;
+    top: 88%;
+    background-color: #1766cc;
+    scale: 2;
+}
+
+#stingerLine1{
+    position: absolute;
+    left: 78%;
+    top: 5%;
+    background-color: #1766cc;
+    scale: 0.6;
+}
+
+#stingerLine2{
+    position: absolute;
+    left: 38%;
+    top: 19%;
+    background-color: #8cbeff;
+    scale: 0.8;
+}
+
+#stingerLine3{
+    position: absolute;
+    left: 56%;
+    top: 23%;
+    background-color: #cce2ff;
+    scale: 0.7;
+}
+
+#stingerLine4{
+    position: absolute;
+    left: 45%;
+    top: 36%;
+    background-color: #cce2ff;
+    scale: 1;
+}
+
+#stingerLine5{
+    position: absolute;
+    left: 97%;
+    top: 41%;
+    background-color: #004caf;
+    scale: 1;
+}
+
+#stingerLine6{
+    position: absolute;
+    left: 12%;
+    top: 45%;
+    background-color: #1a73e8;
+    scale: 0.8;
+}
+
+#stingerLine7{
+    position: absolute;
+    left: 26%;
+    top: 57%;
+    background-color: #5a8bcc;
+    scale: 0.9;
+}
+
+
+#stingerLine8{
+    position: absolute;
+    left: 76%;
+    top: 69%;
+    background-color: #82b8ff;
+    scale: 0.8;
+}
+
+
+#stingerLine9{
+    position: absolute;
+    left: 62%;
+    top: 73%;
+    background-color: #5da3ff;
+    scale: 1;
+}
+
+#stingerLine10{
+    position: absolute;
+    left: 25%;
+    top: 78%;
+    background-color: #1a73e8;
+    scale: 1;
+}
+
+#stingerLine11{
+    position: absolute;
+    left: 78%;
+    top: 87%;
+    background-color: #1766cc;
+    scale: 0.6;
+}
+
+#stingerLine12{
+    position: absolute;
+    left: 38%;
+    top: 96%;
+    background-color: #8cbeff;
+    scale: 0.8;
+}
+
+#stingerLine13{
+    position: absolute;
+    left: 56%;
+    top: 103%;
+    background-color: #cce2ff;
+    scale: 0.7;
+}
+
+#stingerLine14{
+    position: absolute;
+    left: 45%;
+    top: 109%;
+    background-color: #cce2ff;
+    scale: 1;
+}
+
+#stingerLine15{
+    position: absolute;
+    left: 97%;
+    top: 118%;
+    background-color: #004caf;
+    scale: 1;
+}
+
+#stingerLine16{
+    position: absolute;
+    left: 12%;
+    top: 129%;
+    background-color: #1a73e8;
+    scale: 0.8;
+}
+
+#stingerLine17{
+    position: absolute;
+    left: 26%;
+    top: 132%;
+    background-color: #a7cdff;
+    scale: 0.9;
+}
+
+
+#stingerLine18{
+    position: absolute;
+    left: 76%;
+    top: 140%;
+    background-color: #82b8ff;
+    scale: 0.8;
+}
+
+
+#stingerLine19{
+    position: absolute;
+    left: 62%;
+    top: 154%;
+    background-color: #5da3ff;
+    scale: 1;
+}
+
+#stingerLine20{
+    position: absolute;
+    left: 25%;
+    top: 156%;
+    background-color: #1a73e8;
+    scale: 1;
+}
+
+@keyframes stinger {
+    from{
+        transform: translateY(1080px);
+        scale: 1 2;
+    }
+    to{
+        transform: translateY(-2200px);
+        scale: 1 1;
+    }
+}
