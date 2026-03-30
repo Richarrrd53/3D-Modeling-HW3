@@ -186,7 +186,7 @@ moonLoader.load('../img/moon_texture.jpg', (texture) => {
 
 const stageLoader = new GLTFLoader(manager);
 stageLoader.setCrossOrigin('anonymous');
-const stageURL = "https://github.com/Richarrrd53/3D-Modeling-HW3/releases/download/v1/stage.glb";
+const stageURL = "https://mhetdyviiz2ri7p9.private.blob.vercel-storage.com/stage.glb";
 stageLoader.load(stageURL, (gltf) => {
     const stage = gltf.scene;
     scene.add(stage);
