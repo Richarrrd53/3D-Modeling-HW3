@@ -397,17 +397,17 @@ scene.add(moonLight);
 
 
 moonLight.castShadow = true;
-moonLight.shadow.mapSize.width = 2048; 
-moonLight.shadow.mapSize.height = 2048;
+moonLight.shadow.mapSize.width = 4096; 
+moonLight.shadow.mapSize.height = 4096;
 moonLight.shadow.camera.left = -d;
 moonLight.shadow.camera.right = d;
 moonLight.shadow.camera.top = d;
 moonLight.shadow.camera.bottom = -d;
 
-moonLight.shadow.camera.near = d * 1.5; 
-moonLight.shadow.camera.far = d * 4;
-moonLight.shadow.bias = -0.005; 
-moonLight.shadow.normalMapBias = 0.01;
+moonLight.shadow.camera.near = 10; 
+moonLight.shadow.camera.far = 70;
+moonLight.shadow.bias = -0.001; 
+moonLight.shadow.normalMapBias = 0.005;
 
 
 
@@ -838,7 +838,6 @@ function updateSun(time) {
         const night_t = (time < 5) ? (time + 24 - 19) / 10 : (time - 19) / 10;
         const brightness = Math.max(0.4, 1.0 - night_t * 0.6);
         ambientLight.intensity = 0.25; 
-        renderer.toneMappingExposure = 0.7; 
         scene.background = new THREE.Color(0x020a1a); 
         renderer.domElement.style.filter = `contrast(1.0) saturate(1.3) brightness(${brightness})`;
         if(moonMesh) moonMesh.visible = true;
