@@ -799,7 +799,7 @@ function updateSun(time) {
     if (time >= 5 && time < 19) {
         const t = (time - 5) / 14; 
         
-        sunIntensity = Math.max(0.0, 1.2 - Math.abs(t - 0.5) * 2.4);
+        sunIntensity = Math.max(0.0, 1.6 - Math.abs(t - 0.5) * 2.8);
         moonIntensity = 0.0;
 
         
@@ -819,7 +819,7 @@ function updateSun(time) {
         
         sunIntensity = 0.0;
         const t = (time < 5) ? (time + 24 - 19) / 10 : (time - 19) / 10;
-        moonIntensity = Math.max(0.0, 0.4 - Math.abs(t - 0.5) * 0.8);
+        moonIntensity = Math.max(0.0, 0.8 - Math.abs(t - 0.5) * 1.6);
         
         dirLight.castShadow = false;
         moonLight.castShadow = true;
