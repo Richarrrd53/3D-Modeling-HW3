@@ -1,7 +1,7 @@
-import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
-import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js';
-import { OrbitControls } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/controls/OrbitControls.js';
-import { Sky } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/objects/Sky.js';
+import * as THREE from 'https://unpkg.com/three@0.129.0/build/three.module.js';
+import { GLTFLoader } from 'https://unpkg.com/three@0.129.0/examples/jsm/loaders/GLTFLoader.js';
+import { OrbitControls } from 'https://unpkg.com/three@0.129.0/examples/jsm/controls/OrbitControls.js';
+import { Sky } from 'https://unpkg.com/three@0.129.0/examples/jsm/objects/Sky.js';
 import { Reflector } from 'https://unpkg.com/three@0.129.0/examples/jsm/objects/Reflector.js';
 
 const scene = new THREE.Scene();
